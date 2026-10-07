@@ -1,0 +1,32 @@
+import {getPlatformProxy} from 'wrangler';
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+import {runStructuredExtraction,CoiExtractionSchema} from '../src/ai/extraction';
+import {askClef} from '../src/ai/clef';
+if(process.env.AUDITSHOCK_LIVE_AI!=='1')throw new Error('Explicit hosted public-data opt-in required');
+const source=await readFile('/tmp/auditshock-ecwa-certificate.pdf');
+if(createHash('sha256').update(source).digest('hex')!=='67e2e046c49fe47228aa107a9fd20c2303e621103a881a1ef610932fb682a2ad')throw new Error('Public source hash mismatch');
+execFileSync('pdfseparate',['-f','32','-l','32','/tmp/auditshock-ecwa-certificate.pdf','/tmp/auditshock-ecwa-page-%d.pdf']);
+await writeFile('/tmp/auditshock-live-ai.jsonc',JSON.stringify({name:'auditshock-ai-validation',compatibility_date:'2026-10-06',ai:{binding:'AI',remote:true}}));
+const platform=await getPlatformProxy({configPath:'/tmp/auditshock-live-ai.jsonc',persist:false});
+try {
+ const bytes=await readFile('/tmp/auditshock-ecwa-page-32.pdf');
+ let started=performance.now();
+ const conversion=await platform.env.AI.toMarkdown({name:'ecwa-coi-page-32.pdf',blob:new Blob([bytes],{type:'application/pdf'})});
+ if(conversion.format==='error'||!conversion.data)throw new Error('Public sample conversion failed');
+ const conversionMs=Math.round(performance.now()-started);
+ await writeFile('/tmp/auditshock-ecwa-live-conversion.md',conversion.data);
+ const ai={run:(model,input,options)=>platform.env.AI.run(model,input,options)};
+ const env={AI:ai,AI_GATEWAY_ID:process.env.AUDITSHOCK_AI_GATEWAY_ID,AUDITSHOCK_DB:{prepare:()=>({bind:()=>({run:async()=>({success:true})})})}} as any;
+ started=performance.now();
+ const classification=await askClef(env,'public-diagnostic',null,'DOCUMENT_CLASSIFICATION',{content:conversion.data});
+ const classificationMs=Math.round(performance.now()-started);
+ started=performance.now();
+ const extraction=await runStructuredExtraction(env,conversion.data,CoiExtractionSchema);
+ const extractionMs=Math.round(performance.now()-started);
+ const fields={named_insured:extraction.named_insured.value,certificate_holder:extraction.certificate_holder.value,certificate_issue_date:extraction.certificate_issue_date.value,workers_comp:{policy_number:extraction.workers_comp.policy_number.value,effective_date:extraction.workers_comp.effective_date.value,expiration_date:extraction.workers_comp.expiration_date.value,insurer_name:extraction.workers_comp.insurer_name.value,section_present:extraction.workers_comp.section_present.value,indicated:extraction.workers_comp.indicated.value}};
+ const result={kind:'public-historical-coi-live-diagnostic',gatewayConfigured:Boolean(process.env.AUDITSHOCK_AI_GATEWAY_ID),conversionMs,classificationMs,extractionMs,classification,fields};
+ await writeFile('/tmp/auditshock-live-document-result.json',JSON.stringify(result,null,2));
+ console.log(JSON.stringify(result));
+}catch(error){console.error(JSON.stringify({stage:'public-document-diagnostic',error:error.message,cause:error.cause?.message}));process.exitCode=1;}finally{await platform.dispose();}

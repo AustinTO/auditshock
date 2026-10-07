@@ -1,0 +1,157 @@
+{
+  "validated_at": "2026-10-07",
+  "backend": {
+    "tests_passed": 62,
+    "test_files": 9,
+    "actual_local_workerd_d1_r2_workflow": true,
+    "typecheck": "passed",
+    "bundle": "passed",
+    "dependency_audit_all_packages": "zero advisories after sharp 0.35.5 override",
+    "workers_ai_gateway_optional": true,
+    "deployed_version": "cf030cc0-0740-4120-aeab-fd4ccc67f539",
+    "hourly_object_cleanup": true,
+    "production_url": "https://auditshock-api.austintaylorodell.workers.dev"
+  },
+  "mobile": {
+    "tests_passed": 16,
+    "analysis": "passed",
+    "application_id": "com.puphr.auditshock",
+    "apk_build": "passed",
+    "aab_build": "passed",
+    "signing_certificate_sha256": "6aecf602710b013782fe935a8d72912d24baa6b52058cdd46ca91b2ec4d6fe04",
+    "device": "OnePlus 6T",
+    "installed_and_launched": true,
+    "apk_sha256": "17f90eb43a8c563b180e997814dc7e9a8a57a411a6c09dd14f33494e2ed57f4a",
+    "aab_sha256": "4422469ec5f1a549d82ab435c8c0ba12d9a8b1103f36f4396f0814771b83ad10",
+    "authenticated_home_visible_after_deployment": true,
+    "audit_list_load_error_visible": false
+  },
+  "public_payments": {
+    "rows": 4,
+    "vendors": 4,
+    "total_cents": 8959400,
+    "cent_difference": 0,
+    "duplicates": 0,
+    "work_dates_in_source": false,
+    "initial_status": "NEEDS_INPUT",
+    "sqlite_benchmark_elapsed_ms": 21,
+    "workerd_workflow_test_elapsed_ms": 1514,
+    "timing_limit": "single local run, not a load or hosted latency benchmark"
+  },
+  "public_certificate_diagnostic": {
+    "kind": "public-historical-coi-live-diagnostic",
+    "gatewayConfigured": false,
+    "conversionMs": 660,
+    "classificationMs": 613,
+    "extractionMs": 16910,
+    "classification": {
+      "document_type": {
+        "type": "choice",
+        "choice": "coi",
+        "probabilities": {
+          "coi": 0.9809,
+          "wc_policy": 0.0061,
+          "audit_notice": 0.0024,
+          "vendor_ledger": 0.0023,
+          "payroll_report": 0.0022,
+          "invoice": 0.0027,
+          "other": 0.0034
+        },
+        "confidence": 0.9558
+      },
+      "readable_enough": {
+        "p_yes": 0.7724
+      },
+      "needs_manual_review": {
+        "p_yes": 0.1241
+      }
+    },
+    "fields": {
+      "named_insured": "Erie County Water Authority",
+      "certificate_holder": "GHD Consulting Services Inc.",
+      "certificate_issue_date": "03/30/2020",
+      "workers_comp": {
+        "policy_number": "WC 0380936-04",
+        "effective_date": "07/01/2019",
+        "expiration_date": "07/01/2020",
+        "insurer_name": "Allied World Assurance Company US Inc",
+        "section_present": true,
+        "indicated": true
+      }
+    },
+    "correct_critical_fields": 6,
+    "critical_fields": 9,
+    "incorrect_fields": [
+      "named_insured",
+      "certificate_holder",
+      "workers_comp.insurer_name"
+    ],
+    "pipeline_resolution": "Low-readability/manual-review gate prevents structured facts from being persisted and requires source-based entry",
+    "accuracy_limit": "One historical certificate; direct extraction diagnostic bypassed production review/gateway gates and is not a production accuracy claim"
+  },
+  "hosted_blockers": [],
+  "public_certificate_production_pipeline": {
+    "kind": "live-public-certificate-production-pipeline",
+    "workers_ai_direct": true,
+    "elapsedMs": 1492,
+    "document": {
+      "processing_status": "NEEDS_REVIEW",
+      "review_error": "Source layout or classification is ambiguous. Review the original document and enter coverage manually from the source.",
+      "document_type": "coi"
+    },
+    "counts": {
+      "facts": 0,
+      "coverages": 0,
+      "confirmed_coverages": 0
+    },
+    "audit": {
+      "status": "NEEDS_INPUT",
+      "payments": 0,
+      "vendors": 0
+    }
+  },
+  "production_d1_authentication_refreshed": true,
+  "pending_production_migrations": [],
+  "hosted_api_public_validation": {
+    "kind": "production-api-public-data-validation",
+    "rows": 4,
+    "totalCents": 8959400,
+    "centDifference": 0,
+    "syntheticRateAndWorkDates": true,
+    "syntheticPremiumCents": 447970,
+    "liveDocumentReview": "NEEDS_REVIEW",
+    "confirmedCoverage": 0,
+    "elapsedMs": 23539,
+    "emailSent": false,
+    "qaAccountCleanup": true
+  },
+  "applied_production_migrations": [
+    "0003_auth_hardening.sql",
+    "0004_auth_request_limits.sql",
+    "0005_analysis_concurrency.sql",
+    "0006_object_cleanup.sql"
+  ],
+  "production_health_status": 200,
+  "unauthenticated_audits_status": 401,
+  "post_rollout_counts": {
+    "audits": 1,
+    "documents": 0,
+    "cleanup_pending": 0,
+    "qa_users": 0,
+    "active_analyses": 0
+  },
+  "private_backup": {
+    "path": "/tmp/auditshock-pre-hardening-backup.sql",
+    "permissions": "0600",
+    "sha256": "01d74acb9241d74ffb7d0affe2e3d8890b4aad21a92fe4c36192e063a4c4f880",
+    "sqlite_integrity": "ok",
+    "foreign_key_errors": 0,
+    "user_authorized": true
+  },
+  "remaining_verification_limits": [
+    "Single historical certificate and four-payment snapshot do not establish general extraction accuracy or load tolerance",
+    "Complete user-driven native file-picker/review flow was not exercised; authenticated home, widget regressions, and hosted API workflow were verified"
+  ],
+  "user_confirmed_email_otp_login": true,
+  "extra_test_email_skipped_at_user_request": true
+}

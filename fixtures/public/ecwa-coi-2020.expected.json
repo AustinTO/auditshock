@@ -1,0 +1,18 @@
+{
+  "source_pdf_page_one_based": 32,
+  "document_kind": "coi",
+  "named_insured": "GHD Consulting Services Inc.",
+  "certificate_holder": "Erie County Water Authority",
+  "certificate_issue_date": "2020-03-30",
+  "workers_comp": {
+    "section_present": true,
+    "indicated": true,
+    "policy_number": "WC 0380936-04",
+    "effective_date": "2019-07-01",
+    "expiration_date": "2020-07-01",
+    "insurer_name": "Zurich American Insurance Company"
+  },
+  "placeholder_identity": false,
+  "currently_valid": false,
+  "limits_of_ground_truth": "Historical certificate published inside a contract appendix described as a sample. Explicit markings support extraction labels, not authentication, current coverage, cancellation history, or legal conclusions."
+}

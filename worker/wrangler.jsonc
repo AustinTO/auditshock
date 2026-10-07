@@ -1,0 +1,45 @@
+{
+  "name": "auditshock-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-06",
+  "observability": {
+    "enabled": true
+  },
+  "ai": {
+    "binding": "AI",
+    "remote": true
+  },
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "AUDITSHOCK_DB",
+      "database_name": "auditshock-prod",
+      "database_id": "8daef53a-0a85-4513-ab4e-05f61d69246a"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "AUDITSHOCK_DOCS",
+      "bucket_name": "auditshock-docs"
+    }
+  ],
+  "workflows": [
+    {
+      "name": "auditshock-analysis",
+      "binding": "AUDIT_WORKFLOW",
+      "class_name": "AuditWorkflow"
+    }
+  ],
+  "vars": {
+    "EMAIL_FROM": "AuditShock <noreply@auth.trusthentic.com>"
+  },
+  "triggers": {
+    "crons": [
+      "0 * * * *"
+    ]
+  }
+}

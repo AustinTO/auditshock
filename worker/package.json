@@ -1,0 +1,35 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "test:runtime": "npm run build && AUDITSHOCK_WORKER_RUNTIME=1 vitest run test/api.test.js test/runtime.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@cloudflare/workers-types": "^5.20261006.1",
+    "hono": "^4.13.13",
+    "uuid": "^14.0.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3",
+    "wrangler": "^4.148.0"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "researched_at": "2026-10-07",
+  "sources": [
+    {
+      "id": "south-gate-payments-2025-08-06",
+      "url": "https://d3n9y02raazwpg.cloudfront.net/cityofsouthgate/d7780323-625b-11f0-b7f5-005056a89546-4f39a4e4-22ed-438f-9977-57609c5627e5-1755813272.pdf",
+      "publisher": "City of South Gate, California",
+      "kind": "actual_public_payments_transcribed_from_indexed_primary_document",
+      "local_file": "south-gate-payments-2025-08-06.csv",
+      "sha256": "29664de467a15032e0d71ed39e5ca8128e243ebf4c163352b3158bbf69968faa",
+      "expected_file": "south-gate-payments-2025-08-06.expected.json",
+      "retrieval_status": "original_pdf_downloaded_text_extracted_and_page_198_visually_verified",
+      "license": "Public municipal payment facts transcribed; no document redistribution license verified and source PDF is not included.",
+      "source_locator": "Warrant Register for Council Meeting 8/26/2025, Part I, Final Check List, page labeled 1 (agenda page 198), checks 111230 through 111233.",
+      "transformation": "Four check totals transcribed; dates normalized to ISO, vendor ID prefixes omitted, check numbers retained as memo. WILLDAN combines source invoice amounts 10872.00 and 1510.00 into its published check total 12382.00.",
+      "limitations": "Four checks only; not the complete agenda or vendor universe. Payment date is not a work date. No COIs accompany these records. Premium scenario uses a synthetic rate; it is not an actual assessed premium. Original PDF kept in /tmp; reuse license not verified.",
+      "source_binary_sha256": "145fe9c5bf101ab0acf8e1a70a93ee6b3b227671b1a7ab2f9b931403e90ae61f",
+      "source_binary_bytes": 25132189,
+      "source_pdf_page_one_based": 198,
+      "verification": "Poppler pdftotext -layout corroborates values; pdftoppm page 198 rendered and visually inspected: check numbers, vendor names, dates, four check totals and published subtotal agree exactly with fixture."
+    },
+    {
+      "id": "ecwa-coi-2020",
+      "url": "https://www.ecwa.org/files/pdf/item_4_professional_services_contract_no__ghd-009.pdf",
+      "publisher": "Erie County Water Authority",
+      "kind": "historical_filled_coi_in_public_contract_appendix",
+      "retrieval_status": "original_pdf_downloaded_text_extracted_and_page_32_visually_verified",
+      "source_binary_sha256": "67e2e046c49fe47228aa107a9fd20c2303e621103a881a1ef610932fb682a2ad",
+      "source_binary_bytes": 7453086,
+      "source_pdf_page_one_based": 32,
+      "expected_file": "ecwa-coi-2020.expected.json",
+      "local_file": null,
+      "evaluation_binary_path": "/tmp/auditshock-ecwa-certificate.pdf",
+      "evaluation_page_text_path": "/tmp/auditshock-ecwa-coi-page.txt",
+      "license": "ACORD copyright notice; no reuse license verified. Original PDF remains outside repo; labels only included.",
+      "limitations": "Mixed contract and insurance packet. Use page 32 for these labels; do not mix WC dates with other coverage dates. Historical filled certificate in appendix described as sample; not current verified insurance, no ledger vendor association."
+    },
+    {
+      "id": "nyc-dycd-insurance-samples",
+      "url": "https://www.nyc.gov/assets/dycd/downloads/pdf/Insurance-Sample-Package26.pdf",
+      "publisher": "NYC Department of Youth and Community Development",
+      "kind": "official_published_sample_not_live_policy",
+      "local_file": "nyc-dycd-insurance-samples.pdf",
+      "retrieval_status": "browser_text_verified_original_download_returned_HTTP_403",
+      "license": "No redistribution license verified; ACORD and ISO copyright notices present. Fetch from publisher for local evaluation; do not redistribute PDF.",
+      "expected": {
+        "page_count": 17,
+        "coi_page_one_based": 10,
+        "named_insured": "CBO NAME",
+        "workers_comp_policy_number": "1234567890",
+        "workers_comp_insurer_name": "ABC Insurance Company",
+        "workers_comp_effective_date": "2016-07-01",
+        "workers_comp_expiration_date": "2017-06-30",
+        "certificate_issue_date": "2016-09-30",
+        "review_required": true
+      },
+      "limitation": "Sample placeholders must never be accepted as evidence of an actual vendor's coverage. Full package contains multiple document kinds; isolate page 10 for COI extraction. Labels derived from browser-extracted text, pending visual confirmation."
+    },
+    {
+      "id": "chicago-payments",
+      "url": "https://data.cityofchicago.org/resource/s4vu-giwb.csv?$limit=25",
+      "catalog_url": "https://catalog.data.gov/dataset/payments",
+      "publisher": "City of Chicago",
+      "kind": "actual_public_vendor_payments",
+      "local_file": "chicago-payments-25.csv",
+      "retrieval_status": "catalog_verified_download_blocked_by_dns",
+      "license": "No specific reuse license verified. Consult publisher terms before redistributing downloaded records.",
+      "expected": null,
+      "limitation": "No payment records downloaded or measured. Endpoint and column mapping require confirmation on retrieval. The query is bounded but not an immutable snapshot; record SHA-256 and retrieval time before benchmarking. Older records may be aggregated, so they do not establish work dates."
+    }
+  ],
+  "synthetic": {
+    "file": "../synthetic/ledger.csv",
+    "expected_rows": 4,
+    "expected_total_cents": 820000,
+    "expected_unique_raw_vendors": 4,
+    "expected_vendor_after_review_count": 3,
+    "limitations": "Invented transactions; grouping Smith Roofing aliases requires review. No real COI is linked to this ledger."
+  }
+}

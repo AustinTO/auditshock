@@ -1,0 +1,12 @@
+{
+  "rows": 4,
+  "unique_raw_vendors": 4,
+  "total_cents": 8959400,
+  "payment_date": "2025-08-06",
+  "amounts_cents": [4500000, 1500000, 1721200, 1238200],
+  "check_numbers": ["111230", "111231", "111232", "111233"],
+  "coverage_expected_without_cois": "NO_MATCHING_COI",
+  "wc_rate_micros_per_100": 5000000,
+  "full_payments_estimated_premium_cents": 447970,
+  "premium_scenario_is_synthetic": true
+}
